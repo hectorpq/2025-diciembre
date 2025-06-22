@@ -1,20 +1,38 @@
+#server:
+#  port: 8085
+#
+#spring:
+#  application:
+#    name: api-gateway
+#
+#  config:
+#    import: optional:configserver:http://root:123456@localhost:7070
+#
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true
 server:
   port: 8085
 
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://localhost:8090/eureka
+      defaultZone: ${EUREKA_URI:http://localhost:8090/eureka}
+  instance:
+    #hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 spring:
-  application:
-    name: api-gateway
-
-  config:
-    import: optional:configserver:http://root:123456@localhost:7070
-
   cloud:
     gateway:
+
       discovery:
         locator:
-          enabled: true
-          lower-case-service-id: true
-
+          enable: true
+          
       routes:
         - id: ms-cliente-service
           uri: lb://ms-cliente-service
@@ -51,9 +69,9 @@ spring:
           predicates:
             - Path=/api/disenos/**
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8090/eureka}
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${EUREKA_URI:http://localhost:8090/eureka}
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
