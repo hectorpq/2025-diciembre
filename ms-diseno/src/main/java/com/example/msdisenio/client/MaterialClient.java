@@ -4,7 +4,7 @@ import com.example.msdisenio.dto.MaterialDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "material-client", url = "http://localhost:8080/api/materiales")
+@FeignClient(name = "material-client", url = "http://localhost:8085/api/materiales")
 public interface MaterialClient {
 
     @PutMapping("/restar-stock")
