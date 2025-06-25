@@ -1,22 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {ApiService} from './core/services/api.service';
+// Ruta: dad-front/src/app/app.ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss']
 })
-export class App implements OnInit {
-  protected title = 'dad-front';
-
-  constructor(private apiService: ApiService) {
-  }
-
-  ngOnInit() {
-    this.apiService.getCategory().subscribe(response => {
-      console.log(response);
-    });
-  }
-}
+export class AppComponent {}

@@ -1,5 +1,5 @@
 export const resources = {
   catalogo: {
-    categories: "api/materiales"
+    categories: "categorias"
   }
 };
