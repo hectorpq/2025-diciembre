@@ -1,5 +1,4 @@
-// Ruta: dad-front/src/main.ts                 // obligatorio para cambio de detección de Angular
-import 'zone.js/dist/zone';
+import 'zone.js/dist/zone.js';      // Specifier explícito
 
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app';
