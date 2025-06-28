@@ -1,2 +1,97 @@
-<h2 class="text-2xl font-bold text-gray-800 mb-6">Diseños</h2>
-<p>Listado y control de diseños textiles.</p>
+<div class="contenedor-principal">
+  <!-- Barra lateral -->
+  <aside class="barra-lateral">
+    <h1 class="logo">ActiSport</h1>
+    <nav>
+      <ul>
+        <li><a routerLink="/almacen" routerLinkActive="activo"><i class="fas fa-warehouse"></i> Almacén</a></li>
+        <li><a routerLink="/productos" routerLinkActive="activo"><i class="fas fa-boxes"></i> Productos</a></li>
+        <li><a routerLink="/disenios" routerLinkActive="activo"><i class="fas fa-tshirt"></i> Diseños</a></li>
+        <li><a routerLink="/ventas" routerLinkActive="activo"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="contenido">
+    <h2>ActiSports - Gestión de Diseños</h2>
+
+    <div class="acciones">
+      <button (click)="mostrarFormulario = true">Nuevo Diseño</button>
+    </div>
+
+    <!-- Modal para formulario de diseño -->
+    <div class="modal-backdrop" *ngIf="mostrarFormulario" (click)="cerrarModal()">
+      <div class="modal-contenido" (click)="$event.stopPropagation()">
+        <h3>{{ modoEdicion ? 'Editar Diseño' : 'Registrar Diseño' }}</h3>
+
+        <form (ngSubmit)="guardarDisenio()" #form="ngForm">
+          <input type="text" name="nombrePrenda" [(ngModel)]="nuevoDisenio.nombrePrenda" placeholder="Nombre de prenda" required />
+          <textarea name="descripcion" [(ngModel)]="nuevoDisenio.descripcion" placeholder="Descripción" required></textarea>
+
+          <div class="material-selector">
+            <label>Material</label>
+            <select [(ngModel)]="materialSeleccionado.idMaterial" name="materialSelect" required>
+              <option [ngValue]="null" disabled selected>-- Selecciona material --</option>
+              <option *ngFor="let mat of materiales" [ngValue]="mat.idMaterial">{{ mat.nombreMaterial }}</option>
+            </select>
+
+            <input type="number" [(ngModel)]="materialSeleccionado.cantidadUsada" name="cantidad" placeholder="Cantidad usada" min="0.01" step="0.01" required />
+            <button type="button" class="btn-agregar" (click)="agregarMaterial()">Agregar</button>
+          </div>
+
+          <ul class="materiales-usados">
+            <li *ngFor="let m of nuevoDisenio.materialesUsados; let i = index">
+              {{ m.nombreMaterial }} - {{ m.cantidadUsada }} unidades
+              <button type="button" class="btn-quitar" (click)="eliminarMaterial(i)">✕</button>
+            </li>
+          </ul>
+
+          <div class="modal-botones">
+            <button type="submit" class="btn-guardar" [disabled]="!form.valid || !nuevoDisenio.materialesUsados.length">
+              {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+            </button>
+            <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+          </div>
+        </form>
+
+        <div class="toast" *ngIf="mensaje">{{ mensaje }}</div>
+      </div>
+    </div>
+
+    <!-- Tabla de diseños -->
+    <table class="tabla-materiales">
+      <thead>
+      <tr>
+        <th>Prenda</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Materiales Usados</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let d of disenios">
+        <td>{{ d.nombrePrenda }}</td>
+        <td>{{ d.descripcion }}</td>
+        <td>{{ d.fechaCreacion | date:'shortDate' }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let mu of d.materialesUsados">{{ mu.nombreMaterial }} - {{ mu.cantidadUsada }}</li>
+          </ul>
+        </td>
+        <td>
+          <div class="boton-acciones">
+            <button type="button" class="editar" (click)="editarDisenio(d)">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button type="button" class="eliminar" (click)="eliminarDisenio(d.idDisenio)">
+              <i class="fas fa-trash-alt"></i> Eliminar
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </main>
+</div>

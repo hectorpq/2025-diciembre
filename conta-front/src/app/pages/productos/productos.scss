@@ -1,0 +1,262 @@
+.contenedor-principal {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+
+  .barra-lateral {
+    width: 240px;
+    background-color: #003049;
+    color: #ffffff;
+    padding: 20px;
+
+    .logo {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin: 15px 0;
+
+        a {
+          color: #ffffff;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          font-weight: 500;
+
+          i {
+            margin-right: 10px;
+          }
+
+          &.activo {
+            color: #ffd60a;
+            font-weight: bold;
+          }
+
+          &:hover {
+            color: #ffd60a;
+          }
+        }
+      }
+    }
+  }
+
+  .contenido {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+
+    h2 {
+      font-size: 28px;
+      color: #003049;
+      margin-bottom: 20px;
+    }
+
+    .acciones {
+      text-align: right;
+      margin-bottom: 15px;
+
+      .btn-nuevo {
+        background-color: #0077b6;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        i {
+          margin-right: 6px;
+        }
+
+        &:hover {
+          background-color: #005f87;
+        }
+      }
+    }
+
+    .tabla-productos {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+      th, td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #e5e5e5;
+        text-align: left;
+      }
+
+      th {
+        background-color: #e0e0e0;
+        font-weight: 600;
+        color: #333;
+      }
+
+      tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 20px;
+
+        li {
+          font-size: 14px;
+        }
+      }
+
+      .btn-accion {
+        border: none;
+        padding: 6px 10px;
+        margin-right: 5px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &.btn-editar {
+          background-color: #219ebc;
+          color: white;
+
+          &:hover {
+            background-color: #126782;
+          }
+        }
+
+        &.btn-eliminar {
+          background-color: #d90429;
+          color: white;
+
+          &:hover {
+            background-color: #9a021e;
+          }
+        }
+      }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+
+      .modal-contenido {
+        background-color: #ffffff;
+        padding: 25px 30px;
+        border-radius: 8px;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+        h3 {
+          margin-top: 0;
+          margin-bottom: 20px;
+          font-size: 22px;
+          color: #003049;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+
+          input, select, textarea {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+          }
+
+          textarea {
+            resize: vertical;
+            min-height: 60px;
+          }
+
+          label {
+            font-weight: 500;
+            margin-top: 5px;
+          }
+
+          .info-materiales {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+
+            h4 {
+              margin: 0 0 8px 0;
+              font-size: 16px;
+              color: #003049;
+            }
+
+            ul {
+              margin: 0;
+              padding-left: 16px;
+
+              li {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+
+            .btn-guardar {
+              background-color: #06d6a0;
+              color: white;
+              padding: 8px 18px;
+              border: none;
+              border-radius: 5px;
+              font-weight: bold;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #049c78;
+              }
+            }
+
+            .btn-cancelar {
+              background-color: #adb5bd;
+              color: white;
+              padding: 8px 16px;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #6c757d;
+              }
+            }
+          }
+        }
+
+        .toast {
+          margin-top: 10px;
+          background-color: #198754;
+          color: white;
+          padding: 8px;
+          border-radius: 4px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
