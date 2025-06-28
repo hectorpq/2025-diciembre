@@ -1,0 +1,50 @@
+/* Contenedor principal que contiene sidebar + contenido */
+.contenedor-principal {
+  display: flex;
+  height: 100vh; /* Altura total de la ventana */
+}
+
+/* Barra lateral fija a la izquierda */
+.barra-lateral {
+  width: 220px;          /* ancho fijo */
+  background-color: #004080; /* color de fondo */
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Enlaces en la barra lateral */
+.barra-lateral nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+
+.barra-lateral nav ul li {
+  margin-bottom: 15px;
+}
+
+.barra-lateral nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre icono y texto */
+}
+
+.barra-lateral nav ul li a.activo {
+  background-color: #0066cc;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Contenido principal a la derecha, ocupa todo el resto */
+.contenido {
+  flex: 1;
+  padding: 30px;
+  background-color: #f5f5f5;
+  overflow-y: auto; /* scroll si contenido excede */
+}

@@ -1,11 +1,13 @@
-// src/app/app.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  template: `<router-outlet></router-outlet>`
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss'],
+  imports: [RouterModule, RouterLink, RouterLinkActive, RouterOutlet],
 })
-export class App {}
+export class App {
+  title = 'Tu Proyecto';
+}
