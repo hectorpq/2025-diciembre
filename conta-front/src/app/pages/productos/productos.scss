@@ -1,262 +1,269 @@
 .contenedor-principal {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
+  background-color: #f5f7fa;
+}
 
-  .barra-lateral {
-    width: 240px;
-    background-color: #003049;
-    color: #ffffff;
-    padding: 20px;
+/* Barra lateral */
+.barra-lateral {
+  width: 220px;
+  background-color: #023e8a;
+  color: white;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 
-    .logo {
-      font-size: 24px;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-
-    nav ul {
-      list-style: none;
-      padding: 0;
-
-      li {
-        margin: 15px 0;
-
-        a {
-          color: #ffffff;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          font-weight: 500;
-
-          i {
-            margin-right: 10px;
-          }
-
-          &.activo {
-            color: #ffd60a;
-            font-weight: bold;
-          }
-
-          &:hover {
-            color: #ffd60a;
-          }
-        }
-      }
-    }
+  .logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
-  .contenido {
-    flex: 1;
-    padding: 30px;
-    overflow-y: auto;
+  nav ul {
+    list-style: none;
+    padding: 0;
 
-    h2 {
-      font-size: 28px;
-      color: #003049;
-      margin-bottom: 20px;
-    }
+    li {
+      margin: 1rem 0;
 
-    .acciones {
-      text-align: right;
-      margin-bottom: 15px;
-
-      .btn-nuevo {
-        background-color: #0077b6;
+      a {
         color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+        text-decoration: none;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
 
         i {
-          margin-right: 6px;
+          margin-right: 0.6rem;
+        }
+
+        &.activo {
+          font-weight: bold;
+          background-color: #0077b6;
+          padding: 0.5rem;
+          border-radius: 5px;
         }
 
         &:hover {
-          background-color: #005f87;
-        }
-      }
-    }
-
-    .tabla-productos {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-      th, td {
-        padding: 12px 16px;
-        border-bottom: 1px solid #e5e5e5;
-        text-align: left;
-      }
-
-      th {
-        background-color: #e0e0e0;
-        font-weight: 600;
-        color: #333;
-      }
-
-      tbody tr:hover {
-        background-color: #f1f1f1;
-      }
-
-      ul {
-        margin: 0;
-        padding-left: 20px;
-
-        li {
-          font-size: 14px;
-        }
-      }
-
-      .btn-accion {
-        border: none;
-        padding: 6px 10px;
-        margin-right: 5px;
-        border-radius: 4px;
-        font-size: 14px;
-        cursor: pointer;
-
-        &.btn-editar {
-          background-color: #219ebc;
-          color: white;
-
-          &:hover {
-            background-color: #126782;
-          }
-        }
-
-        &.btn-eliminar {
-          background-color: #d90429;
-          color: white;
-
-          &:hover {
-            background-color: #9a021e;
-          }
-        }
-      }
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-
-      .modal-contenido {
-        background-color: #ffffff;
-        padding: 25px 30px;
-        border-radius: 8px;
-        width: 500px;
-        max-width: 90%;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-
-        h3 {
-          margin-top: 0;
-          margin-bottom: 20px;
-          font-size: 22px;
-          color: #003049;
-        }
-
-        form {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-
-          input, select, textarea {
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-          }
-
-          textarea {
-            resize: vertical;
-            min-height: 60px;
-          }
-
-          label {
-            font-weight: 500;
-            margin-top: 5px;
-          }
-
-          .info-materiales {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border-radius: 4px;
-
-            h4 {
-              margin: 0 0 8px 0;
-              font-size: 16px;
-              color: #003049;
-            }
-
-            ul {
-              margin: 0;
-              padding-left: 16px;
-
-              li {
-                font-size: 14px;
-              }
-            }
-          }
-
-          .modal-botones {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 10px;
-
-            .btn-guardar {
-              background-color: #06d6a0;
-              color: white;
-              padding: 8px 18px;
-              border: none;
-              border-radius: 5px;
-              font-weight: bold;
-              cursor: pointer;
-
-              &:hover {
-                background-color: #049c78;
-              }
-            }
-
-            .btn-cancelar {
-              background-color: #adb5bd;
-              color: white;
-              padding: 8px 16px;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-
-              &:hover {
-                background-color: #6c757d;
-              }
-            }
-          }
-        }
-
-        .toast {
-          margin-top: 10px;
-          background-color: #198754;
-          color: white;
-          padding: 8px;
-          border-radius: 4px;
-          text-align: center;
+          background-color: #0077b6;
+          border-radius: 5px;
+          padding: 0.5rem;
         }
       }
     }
   }
 }
+
+/* Contenido principal */
+.contenido {
+  flex-grow: 1;
+  padding: 2rem;
+
+  h2 {
+    color: #023e8a;
+    margin-bottom: 1rem;
+  }
+
+  .acciones {
+    margin-bottom: 1.5rem;
+
+    .btn-primary {
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.95rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #0096c7;
+      }
+    }
+  }
+
+  .tabla-productos {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    th, td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0077b6;
+      color: white;
+    }
+
+    td {
+      font-size: 0.95rem;
+    }
+
+    .btn-editar, .btn-eliminar {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+
+      i {
+        transition: color 0.2s;
+      }
+    }
+
+    .btn-editar i {
+      color: #0077b6;
+
+      &:hover {
+        color: #023e8a;
+      }
+    }
+
+    .btn-eliminar i {
+      color: #d90429;
+
+      &:hover {
+        color: #9b0000;
+      }
+    }
+  }
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.modal-contenido {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+
+  h3 {
+    margin-top: 0;
+    color: #023e8a;
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    input, select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 0.3rem;
+    }
+
+    .modal-botones {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+
+      .btn-guardar {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 0.5rem;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #0096c7;
+        }
+      }
+
+      .btn-cancelar {
+        background-color: #d90429;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #9b0000;
+        }
+      }
+    }
+  }
+
+  .toast {
+    position: absolute;
+    bottom: -2.5rem;
+    left: 0;
+    right: 0;
+    background-color: #0077b6;
+    color: white;
+    padding: 0.6rem;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 15px;
+
+  .custom-select {
+    width: 100%;
+    padding: 10px 40px 10px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      background-color: #fff;
+    }
+  }
+
+  .select-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555;
+    font-size: 14px;
+  }
+}
+

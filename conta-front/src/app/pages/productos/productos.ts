@@ -1,4 +1,4 @@
-// src/app/pages/productos/productos.ts
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 export class Productos implements OnInit {
   productos: any[] = [];
   disenios: any[] = [];
+
   mostrarFormulario = false;
   modoEdicion = false;
   mensaje = '';
@@ -21,61 +22,47 @@ export class Productos implements OnInit {
   nuevoProducto: any = {
     idProducto: null,
     nombreProducto: '',
-    descripcion: '',
-    precioUnitario: 0,
-    stock: 0,
-    idDisenio: null,
-    nombreDisenio: ''
+    cantidadProducida: 1,
+    idDisenio: null
   };
-
-  disenioSeleccionado: any = null;
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.cargarProductos();
     this.cargarDisenios();
   }
 
   cargarProductos() {
-    this.http.get<any[]>('http://localhost:8085/api/productos').subscribe(data => {
-      this.productos = data;
-    });
+    this.http.get<any[]>('http://localhost:8085/api/productos').subscribe(data => this.productos = data);
   }
 
   cargarDisenios() {
-    this.http.get<any[]>('http://localhost:8085/api/disenos').subscribe(data => {
-      this.disenios = data;
-    });
+    this.http.get<any[]>('http://localhost:8085/api/disenos').subscribe(data => this.disenios = data);
   }
 
-  seleccionarDisenio() {
-    const id = this.nuevoProducto.idDisenio;
-    this.disenioSeleccionado = this.disenios.find(d => d.idDisenio === +id);
-    this.nuevoProducto.nombreDisenio = this.disenioSeleccionado?.nombrePrenda || '';
+  abrirFormulario(prod?: any) {
+    if (prod) {
+      this.nuevoProducto = { ...prod, idDisenio: prod.disenio.idDisenio };
+      this.modoEdicion = true;
+    } else {
+      this.nuevoProducto = { idProducto: null, nombreProducto: '', cantidadProducida: 1, idDisenio: null };
+      this.modoEdicion = false;
+    }
+    this.mostrarFormulario = true;
   }
 
-  guardarProducto() {
-    const url = this.modoEdicion
-      ? `http://localhost:8085/api/productos/${this.nuevoProducto.idProducto}`
-      : 'http://localhost:8085/api/productos';
+  guardarProducto(form: any) {
+    if (!form.valid || !this.nuevoProducto.idDisenio) return;
+    const req = this.modoEdicion
+      ? this.http.put(`http://localhost:8085/api/productos/${this.nuevoProducto.idProducto}`, this.nuevoProducto)
+      : this.http.post('http://localhost:8085/api/productos', this.nuevoProducto);
 
-    const request = this.modoEdicion
-      ? this.http.put(url, this.nuevoProducto)
-      : this.http.post(url, this.nuevoProducto);
-
-    request.subscribe(() => {
+    req.subscribe(() => {
       this.cargarProductos();
       this.cerrarModal();
       this.mostrarMensaje(this.modoEdicion ? 'Producto actualizado' : 'Producto creado');
     });
-  }
-
-  editarProducto(producto: any) {
-    this.nuevoProducto = { ...producto };
-    this.seleccionarDisenio();
-    this.mostrarFormulario = true;
-    this.modoEdicion = true;
   }
 
   eliminarProducto(id: number) {
@@ -90,29 +77,10 @@ export class Productos implements OnInit {
   cerrarModal() {
     this.mostrarFormulario = false;
     this.modoEdicion = false;
-    this.disenioSeleccionado = null;
-    this.nuevoProducto = {
-      idProducto: null,
-      nombreProducto: '',
-      descripcion: '',
-      precioUnitario: 0,
-      stock: 0,
-      idDisenio: null,
-      nombreDisenio: ''
-    };
   }
 
-  mostrarMensaje(texto: string) {
-    this.mensaje = texto;
+  mostrarMensaje(text: string) {
+    this.mensaje = text;
     setTimeout(() => this.mensaje = '', 3000);
   }
-  mostrarMaterialesDelDisenio() {
-    const disenio = this.disenios.find(d => d.idDisenio === this.nuevoProducto.idDisenio);
-    if (disenio) {
-      this.disenioSeleccionado = disenio;
-    } else {
-      this.disenioSeleccionado = null;
-    }
-  }
-
 }

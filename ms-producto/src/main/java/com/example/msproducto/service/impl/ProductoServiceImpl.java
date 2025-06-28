@@ -4,6 +4,7 @@ import com.example.msproducto.client.AlmacenClient;
 import com.example.msproducto.client.DisenioClient;
 import com.example.msproducto.dto.DisenioDTO;
 import com.example.msproducto.dto.MaterialUsadoDTO;
+import com.example.msproducto.dto.ProductoDTO;
 import com.example.msproducto.entity.DetalleMaterial;
 import com.example.msproducto.entity.Producto;
 import com.example.msproducto.repository.ProductoRepository;
@@ -36,7 +37,7 @@ public class ProductoServiceImpl implements ProductoService {
         for (MaterialUsadoDTO mat : disenio.getMaterialesUsados()) {
             double cantidadTotal = mat.getCantidadUsada() * producto.getCantidadProducida();
 
-            // Validación adicional (opcional): verificar stock antes de descontar
+            // Validación: verificar stock antes de descontar
             Double stockDisponible = almacenClient.obtenerStock(mat.getIdMaterial());
             if (stockDisponible == null || stockDisponible < cantidadTotal) {
                 throw new RuntimeException("Stock insuficiente para el material ID " + mat.getIdMaterial());
@@ -60,7 +61,20 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public List<Producto> listarProductos() {
-        return productoRepository.findAll();
+    public List<ProductoDTO> listarProductos() {
+        List<Producto> productos = productoRepository.findAll();
+
+        return productos.stream().map(producto -> {
+            DisenioDTO disenio = disenioClient.obtenerDisenioPorId(producto.getIdDisenio());
+
+            ProductoDTO dto = new ProductoDTO();
+            dto.setIdProducto(producto.getIdProducto());
+            dto.setNombreProducto(producto.getNombreProducto());
+            dto.setCantidadProducida(producto.getCantidadProducida());
+            dto.setDisenio(disenio);
+            dto.setMaterialesConsumidos(producto.getMaterialesConsumidos());
+
+            return dto;
+        }).toList();
     }
 }

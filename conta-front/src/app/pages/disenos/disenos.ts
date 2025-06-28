@@ -51,6 +51,7 @@ export class Disenios implements OnInit {
   }
 
   agregarMaterial() {
+    console.log('Seleccionado:', this.materialSeleccionado);
     const material = this.materiales.find(m => m.idMaterial === this.materialSeleccionado.idMaterial);
     if (material && this.materialSeleccionado.cantidadUsada > 0) {
       this.nuevoDisenio.materialesUsados.push({
@@ -58,18 +59,25 @@ export class Disenios implements OnInit {
         nombreMaterial: material.nombreMaterial,
         cantidadUsada: this.materialSeleccionado.cantidadUsada
       });
+
+      // Limpia el formulario de selección
       this.materialSeleccionado = { idMaterial: null, cantidadUsada: 0 };
+    } else {
+      alert('Selecciona un material y cantidad válida');
     }
   }
+
 
   eliminarMaterial(index: number) {
     this.nuevoDisenio.materialesUsados.splice(index, 1);
   }
 
   guardarDisenio() {
+    console.log('🛰 Enviando al backend:', this.nuevoDisenio);
+
     const url = this.modoEdicion
-      ? `http://localhost:8084/api/disenos/${this.nuevoDisenio.idDisenio}`
-      : 'http://localhost:8084/api/disenos';
+      ? `http://localhost:8085/api/disenos/${this.nuevoDisenio.idDisenio}`
+      : 'http://localhost:8085/api/disenos';
 
     const request = this.modoEdicion
       ? this.http.put(url, this.nuevoDisenio)
@@ -82,6 +90,7 @@ export class Disenios implements OnInit {
     });
   }
 
+
   editarDisenio(disenio: any) {
     this.nuevoDisenio = JSON.parse(JSON.stringify(disenio));
     this.modoEdicion = true;
@@ -90,7 +99,7 @@ export class Disenios implements OnInit {
 
   eliminarDisenio(id: number) {
     if (confirm('¿Estás seguro de eliminar este diseño?')) {
-      this.http.delete(`http://localhost:8084/api/disenos/${id}`).subscribe(() => {
+      this.http.delete(`http://localhost:8085/api/disenos/${id}`).subscribe(() => {
         this.cargarDisenios();
         this.mostrarMensaje('Diseño eliminado');
       });

@@ -1,5 +1,6 @@
 package com.example.msproducto.controller;
 
+import com.example.msproducto.dto.ProductoDTO;
 import com.example.msproducto.entity.Producto;
 import com.example.msproducto.service.ProductoService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class ProductoController {
     }
 
     @GetMapping
-    public List<Producto> listarProductos() {
+    public List<ProductoDTO> listarProductos() {
         return productoService.listarProductos();
     }
 }

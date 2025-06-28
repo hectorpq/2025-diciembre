@@ -6,7 +6,7 @@
       <ul>
         <li><a routerLink="/almacen" routerLinkActive="activo"><i class="fas fa-warehouse"></i> Almacén</a></li>
         <li><a routerLink="/productos" routerLinkActive="activo"><i class="fas fa-boxes"></i> Productos</a></li>
-        <li><a routerLink="/disenios" routerLinkActive="activo"><i class="fas fa-tshirt"></i> Diseños</a></li>
+        <li><a routerLink="/disenos" routerLinkActive="activo"><i class="fas fa-tshirt"></i> Diseños</a></li>
         <li><a routerLink="/ventas" routerLinkActive="activo"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
       </ul>
     </nav>
@@ -14,91 +14,72 @@
 
   <!-- Contenido principal -->
   <main class="contenido">
-    <h2><i class="fas fa-box"></i> Gestión de Productos Terminados</h2>
+    <h2><i class="fas fa-boxes"></i> Gestión de Productos</h2>
 
-    <!-- Botón de acción -->
+    <!-- Botón para abrir formulario -->
     <div class="acciones">
-      <button class="btn-nuevo" (click)="mostrarFormulario = true">
-        <i class="fas fa-plus-circle"></i> Nuevo Producto
-      </button>
+      <button class="btn-primary" (click)="abrirFormulario()">+ Nuevo Producto</button>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal del formulario -->
     <div class="modal-backdrop" *ngIf="mostrarFormulario" (click)="cerrarModal()">
       <div class="modal-contenido" (click)="$event.stopPropagation()">
-        <h3>{{ modoEdicion ? '✏️ Editar Producto' : '🆕 Registrar Producto' }}</h3>
+        <h3>{{ modoEdicion ? 'Editar Producto' : 'Crear Producto' }}</h3>
 
-        <form (ngSubmit)="guardarProducto()" #form="ngForm">
-          <input type="text" [(ngModel)]="nuevoProducto.nombreProducto" name="nombreProducto" placeholder="Nombre del producto" required />
-          <input type="text" [(ngModel)]="nuevoProducto.descripcion" name="descripcion" placeholder="Descripción" required />
-          <input type="number" [(ngModel)]="nuevoProducto.precio" name="precio" placeholder="Precio (S/.)" min="0" step="0.01" required />
+        <form #form="ngForm" (ngSubmit)="guardarProducto(form)">
+          <label>Nombre del Producto:</label>
+          <input name="nombreProducto" [(ngModel)]="nuevoProducto.nombreProducto" placeholder="Ej: Camiseta técnica" required />
 
-          <label for="idDisenio">Diseño asociado</label>
-          <select [(ngModel)]="nuevoProducto.idDisenio" name="idDisenio" (change)="mostrarMaterialesDelDisenio()" required>
-            <option [ngValue]="null" disabled selected>-- Selecciona un diseño --</option>
-            <option *ngFor="let d of disenios" [ngValue]="d.idDisenio">
-              {{ d.nombrePrenda }}
-            </option>
-          </select>
+          <label>Cantidad a Producir:</label>
+          <input type="number" name="cantidadProducida" [(ngModel)]="nuevoProducto.cantidadProducida" min="1" required />
 
-          <!-- Mostrar materiales del diseño -->
-          <div *ngIf="disenioSeleccionado" class="info-materiales">
-            <h4><i class="fas fa-cogs"></i> Materiales utilizados:</h4>
-            <ul>
-              <li *ngFor="let m of disenioSeleccionado.materialesUsados">
-                <i class="fas fa-tools"></i> {{ m.nombreMaterial }} - {{ m.cantidadUsada }}
-              </li>
-            </ul>
+          <label>Diseño Asociado:</label>
+          <div class="custom-select-wrapper">
+            <select name="idDisenio" [(ngModel)]="nuevoProducto.idDisenio" required class="custom-select">
+              <option [ngValue]="null" disabled>-- Seleccionar diseño --</option>
+              <option *ngFor="let d of disenios" [ngValue]="d.idDisenio">
+                {{ d.nombrePrenda }} - {{ d.descripcion }}
+              </option>
+            </select>
+            <i class="fas fa-chevron-down select-icon"></i>
           </div>
 
-          <!-- Botones -->
           <div class="modal-botones">
             <button type="submit" class="btn-guardar" [disabled]="!form.valid">
-              {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+              <i class="fas fa-save"></i> {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
             </button>
-            <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+            <button type="button" class="btn-cancelar" (click)="cerrarModal()">
+              <i class="fas fa-times"></i> Cancelar
+            </button>
           </div>
         </form>
-      </div>
-    </div>
 
-    <!-- Toast -->
-    <div class="toast" *ngIf="mensaje">
-      {{ mensaje }}
+        <div class="toast" *ngIf="mensaje">
+          {{ mensaje }}
+        </div>
+      </div>
     </div>
 
     <!-- Tabla de productos -->
     <table class="tabla-productos">
       <thead>
       <tr>
-        <th><i class="fas fa-box"></i> Nombre</th>
-        <th><i class="fas fa-align-left"></i> Descripción</th>
-        <th><i class="fas fa-dollar-sign"></i> Precio</th>
-        <th><i class="fas fa-tshirt"></i> Diseño</th>
-        <th><i class="fas fa-cogs"></i> Materiales Usados</th>
-        <th><i class="fas fa-cogs"></i> Acciones</th>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Diseño</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let p of productos">
         <td>{{ p.nombreProducto }}</td>
-        <td>{{ p.descripcion }}</td>
-        <td>S/. {{ p.precio | number: '1.2-2' }}</td>
-        <td>{{ p.nombreDisenio }}</td>
+        <td>{{ p.cantidadProducida }}</td>
+        <td>{{ p.disenio?.nombrePrenda || 'Sin diseño' }}</td>
+        <td>{{ p.disenio?.descripcion || '-' }}</td>
         <td>
-          <ul>
-            <li *ngFor="let mu of p.materialesUsados">
-              {{ mu.nombreMaterial }} - {{ mu.cantidadUsada }}
-            </li>
-          </ul>
-        </td>
-        <td>
-          <button class="btn-accion btn-editar" (click)="editarProducto(p)">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="btn-accion btn-eliminar" (click)="eliminarProducto(p.idProducto)">
-            <i class="fas fa-trash-alt"></i>
-          </button>
+          <button class="btn-editar" (click)="abrirFormulario(p)"><i class="fas fa-edit"></i></button>
+          <button class="btn-eliminar" (click)="eliminarProducto(p.idProducto)"><i class="fas fa-trash-alt"></i></button>
         </td>
       </tr>
       </tbody>
