@@ -24,4 +24,10 @@ public class ProductoController {
     public List<ProductoDTO> listarProductos() {
         return productoService.listarProductos();
     }
+
+    @PutMapping("/{id}/stock")
+    public void descontarStock(@PathVariable Long id, @RequestParam int cantidad) {
+        productoService.descontarStock(id, cantidad);
+    }
+
 }

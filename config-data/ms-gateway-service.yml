@@ -32,12 +32,10 @@ spring:
           predicates:
             - Path=/clientes/**
 
-        - id: ms-venta-service
+        - id: ms-ventas-service
           uri: lb://ms-venta-service
           predicates:
             - Path=/api/ventas/**
-          filters:
-            - AuthFilter
 
         - id: ms-auth-service
           uri: lb://ms-auth-service

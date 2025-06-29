@@ -77,4 +77,11 @@ public class ProductoServiceImpl implements ProductoService {
             return dto;
         }).toList();
     }
+
+    @Override
+    public void descontarStock(Long id, int cantidad) {
+
+    }
+
+
 }

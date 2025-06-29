@@ -8,4 +8,7 @@ import java.util.List;
 public interface ProductoService {
     Producto crearProducto(Producto producto);
     List<ProductoDTO> listarProductos(); // Solo para controladores
+
+    void descontarStock(Long id, int cantidad);
+
 }
