@@ -30,4 +30,10 @@ public class ProductoController {
         productoService.descontarStock(id, cantidad);
     }
 
+    @GetMapping("/{id}")
+    public ProductoDTO obtenerProducto(@PathVariable Long id) {
+        return productoService.obtenerProductoPorId(id);
+    }
+
+
 }

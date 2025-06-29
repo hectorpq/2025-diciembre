@@ -21,6 +21,7 @@ public class Producto {
     private String nombreProducto;
     private String tipoProducto;
     private Integer cantidadProducida;
+    private Integer cantidadActual;
     private LocalDate fechaProduccion;
 
     private Long idDisenio; // Referencia externa al diseño

@@ -57,6 +57,9 @@ public class ProductoServiceImpl implements ProductoService {
 
         producto.setMaterialesConsumidos(detalles);
 
+        // 👇 Inicializamos cantidadActual al crear
+        producto.setCantidadActual(producto.getCantidadProducida());
+
         return productoRepository.save(producto);
     }
 
@@ -71,6 +74,7 @@ public class ProductoServiceImpl implements ProductoService {
             dto.setIdProducto(producto.getIdProducto());
             dto.setNombreProducto(producto.getNombreProducto());
             dto.setCantidadProducida(producto.getCantidadProducida());
+            dto.setCantidadActual(producto.getCantidadActual()); // 👈 agregar campo
             dto.setDisenio(disenio);
             dto.setMaterialesConsumidos(producto.getMaterialesConsumidos());
 
@@ -80,8 +84,32 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void descontarStock(Long id, int cantidad) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
 
+        if (producto.getCantidadActual() == null || producto.getCantidadActual() < cantidad) {
+            throw new RuntimeException("Stock insuficiente del producto ID: " + id);
+        }
+
+        producto.setCantidadActual(producto.getCantidadActual() - cantidad);
+        productoRepository.save(producto);
     }
 
+    @Override
+    public ProductoDTO obtenerProductoPorId(Long idProducto) {
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + idProducto));
 
+        DisenioDTO disenio = disenioClient.obtenerDisenioPorId(producto.getIdDisenio());
+
+        ProductoDTO dto = new ProductoDTO();
+        dto.setIdProducto(producto.getIdProducto());
+        dto.setNombreProducto(producto.getNombreProducto());
+        dto.setCantidadProducida(producto.getCantidadProducida());
+        dto.setCantidadActual(producto.getCantidadActual()); // 👈 incluir
+        dto.setDisenio(disenio);
+        dto.setMaterialesConsumidos(producto.getMaterialesConsumidos());
+
+        return dto;
+    }
 }

@@ -13,6 +13,7 @@ public class ProductoDTO {
     private Long idProducto;
     private String nombreProducto;
     private Integer cantidadProducida;
+    private Integer cantidadActual; // 👈 Nuevo campo agregado
     private DisenioDTO disenio; // Diseño completo
     private List<DetalleMaterial> materialesConsumidos;
 }
