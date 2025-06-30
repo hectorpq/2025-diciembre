@@ -32,10 +32,10 @@ spring:
           predicates:
             - Path=/clientes/**
 
-        #- id: ms-ventas-service
-        #  uri: lb://ms-venta-service
-        #  predicates:
-        #    - Path=/api/ventas/**
+        - id: ms-ventas-service
+          uri: lb://ms-venta-service
+          predicates:
+            - Path=/api/ventas/**
 
         - id: ms-auth-service
           uri: lb://ms-auth-service
