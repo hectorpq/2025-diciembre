@@ -33,7 +33,7 @@ spring:
             - Path=/clientes/**
 
         - id: ms-ventas-service
-          uri: lb://ms-venta-service
+          uri: lb://ms-ventas-service
           predicates:
             - Path=/api/ventas/**
 
