@@ -1,0 +1,87 @@
+<div class="contenedor-principal">
+  <main class="contenido">
+    <h2>Gestión de Clientes</h2>
+
+    <div class="acciones">
+      <button (click)="mostrarFormulario = true">
+        <i class="fas fa-user-plus"></i> Nuevo Cliente
+      </button>
+    </div>
+
+    <!-- Modal flotante para cliente -->
+    <div class="modal-backdrop" *ngIf="mostrarFormulario" (click)="cerrarModal()">
+      <div class="modal-contenido" (click)="$event.stopPropagation()">
+        <h3>{{ modoEdicion ? 'Editar Cliente' : 'Registrar Cliente' }}</h3>
+
+        <form (ngSubmit)="guardarCliente()" #form="ngForm">
+          <input
+            type="text"
+            name="nombre"
+            [(ngModel)]="clienteForm.nombre"
+            placeholder="Nombre completo"
+            required />
+
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="clienteForm.email"
+            placeholder="Correo electrónico"
+            required />
+
+          <input
+            type="text"
+            name="telefono"
+            [(ngModel)]="clienteForm.telefono"
+            placeholder="Teléfono"
+            required />
+
+          <div class="modal-botones">
+            <button
+              type="submit"
+              class="btn-guardar"
+              [disabled]="!form.valid">
+              <i class="fas fa-save"></i> {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+            </button>
+
+            <button type="button" class="btn-cancelar" (click)="cerrarModal()">
+              <i class="fas fa-times"></i> Cancelar
+            </button>
+          </div>
+        </form>
+
+        <div class="toast" *ngIf="mensaje">{{ mensaje }}</div>
+      </div>
+    </div>
+
+    <!-- Tabla de clientes -->
+    <table class="tabla-clientes">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of clientes">
+        <td>{{ c.id }}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.telefono }}</td>
+        <td>
+          <div class="boton-acciones">
+            <button class="editar" (click)="editarCliente(c)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="eliminar" (click)="eliminarCliente(c.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </main>
+</div>

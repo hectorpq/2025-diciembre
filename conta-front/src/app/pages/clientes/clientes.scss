@@ -1,0 +1,141 @@
+.contenedor-principal {
+  padding: 1.5rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.contenido h2 {
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.acciones {
+  margin-bottom: 1.5rem;
+}
+
+.acciones button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.acciones button:hover {
+  background-color: #0056b3;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-contenido {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 400px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-contenido h3 {
+  margin-top: 0;
+}
+
+.modal-contenido input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal-botones {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-guardar {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn-cancelar {
+  background-color: #6c757d;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+}
+
+.toast {
+  margin-top: 1rem;
+  background-color: #28a745;
+  color: white;
+  padding: 0.6rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.tabla-clientes {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+  overflow: hidden;
+}
+
+.tabla-clientes th,
+.tabla-clientes td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-clientes th {
+  background-color: #343a40;
+  color: white;
+}
+
+.boton-acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.boton-acciones button {
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.boton-acciones .editar {
+  background-color: #ffc107;
+}
+
+.boton-acciones .eliminar {
+  background-color: #dc3545;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
